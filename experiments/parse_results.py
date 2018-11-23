@@ -37,7 +37,7 @@ def extract_model(data):
 def extract_num_devices(data):
     for line in data:
         if "Number of GPUs: " in line:
-            return len(eval(line.split(": ")[-1].strip()))
+            return int(line.split(": ")[-1].strip())
 
 
 extraction_funcs = {
