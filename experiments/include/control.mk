@@ -21,15 +21,6 @@ endef
 export PROJECT_HELP_MSG
 
 
-define generate_job_intel
- python ../generate_job_spec.py masalvar/horovod-batchai-bench-intel:9-1.8-0.13.2 intelmpi \
- 	--filename job.json \
- 	--node_count $(1) \
- 	--model $(2) \
- 	--ppn $(3)
-endef
-
-
 define generate_job_openmpi
  python ../generate_job_spec.py masalvar/horovod-batchai-bench:9-1.8-0.13.2 openmpi \
  	--filename job.json \
@@ -163,35 +154,6 @@ setup: select-subscription create-resource-group create-workspace create-storage
 
 submit-jobs:
 
-	# Intel Jobs
-	# 1gpuintel
-	$(call generate_job_intel, 1, $(MODEL), 1)
-	$(call submit_job, 1gpuintel)
-
-	# 1gpuintel
-	$(call generate_job_intel, 1, $(MODEL), 2)
-	$(call submit_job, 2gpuintel)
-
-	# 1gpuintel
-	$(call generate_job_intel, 1, $(MODEL), 3)
-	$(call submit_job, 3gpuintel)
-
-	# 1gpuintel
-	$(call generate_job_intel, 1, $(MODEL), 4)
-	$(call submit_job, 4gpuintel)
-
-	# 1gpuintel
-	$(call generate_job_intel, 2, $(MODEL), 4)
-	$(call submit_job, 8gpuintel)
-
-	# 1gpuintel
-	$(call generate_job_intel, 4, $(MODEL), 4)
-	$(call submit_job, 16gpuintel)
-
-	# 1gpuintel
-	$(call generate_job_intel, 8, $(MODEL), 4)
-	$(call submit_job, 32gpuintel)
-
 	# OpenMPI Jobs
 	# 1gpuopen
 	$(call generate_job_openmpi, 1, $(MODEL), 1)
@@ -221,19 +183,12 @@ submit-jobs:
 	$(call generate_job_openmpi, 8, $(MODEL), 4)
 	$(call submit_job, 32gpuopen)
 
-	# Local
-	# 1gpulocal
-	$(call generate_job_local, $(MODEL), 1)
-	$(call submit_job, 1gpulocal)
+#	# Local
+#	# 1gpulocal
+#	$(call generate_job_local, $(MODEL), 1)
+#	$(call submit_job, 1gpulocal)
 
 clean-jobs:
-	$(call delete_job, 1gpuintel)
-	$(call delete_job, 2gpuintel)
-	$(call delete_job, 3gpuintel)
-	$(call delete_job, 4gpuintel)
-	$(call delete_job, 8gpuintel)
-	$(call delete_job, 16gpuintel)
-	$(call delete_job, 32gpuintel)
 
 	$(call delete_job, 1gpuopen)
 	$(call delete_job, 2gpuopen)
@@ -243,48 +198,21 @@ clean-jobs:
 	$(call delete_job, 16gpuopen)
 	$(call delete_job, 32gpuopen)
 
-	$(call delete_job, 1gpulocal)
+#	$(call delete_job, 1gpulocal)
 
 
 ###### Gather Results ######
 
 gather-results:results.json
 	@echo "All results gathered"
-
-results.json: 1gpulocal_$(GPU_TYPE)_local.results 1gpuintel_$(GPU_TYPE)_intel.results 2gpuintel_$(GPU_TYPE)_intel.results 3gpuintel_$(GPU_TYPE)_intel.results \
-4gpuintel_$(GPU_TYPE)_intel.results 8gpuintel_$(GPU_TYPE)_intel.results 16gpuintel_$(GPU_TYPE)_intel.results 32gpuintel_$(GPU_TYPE)_intel.results \
-1gpuopen_$(GPU_TYPE)_open.results 2gpuopen_$(GPU_TYPE)_open.results 3gpuopen_$(GPU_TYPE)_open.results 4gpuopen_$(GPU_TYPE)_open.results 8gpuopen_$(GPU_TYPE)_open.results \
+#1gpulocal_$(GPU_TYPE)_local.results \
+results.json: 1gpuopen_$(GPU_TYPE)_open.results 2gpuopen_$(GPU_TYPE)_open.results 3gpuopen_$(GPU_TYPE)_open.results 4gpuopen_$(GPU_TYPE)_open.results 8gpuopen_$(GPU_TYPE)_open.results \
 16gpuopen_$(GPU_TYPE)_open.results 32gpuopen_$(GPU_TYPE)_open.results
 	python ../parse_results.py
 
 
 1gpulocal_$(GPU_TYPE)_local.results:
 	$(call stream_stdout, 1gpulocal)>1gpulocal_$(GPU_TYPE)_local.results
-
-
-
-1gpuintel_$(GPU_TYPE)_intel.results:
-	$(call stream_stdout, 1gpuintel)>1gpuintel_$(GPU_TYPE)_intel.results
-
-2gpuintel_$(GPU_TYPE)_intel.results:
-	$(call stream_stdout, 2gpuintel)>2gpuintel_$(GPU_TYPE)_intel.results
-
-3gpuintel_$(GPU_TYPE)_intel.results:
-	$(call stream_stdout, 3gpuintel)>3gpuintel_$(GPU_TYPE)_intel.results
-
-4gpuintel_$(GPU_TYPE)_intel.results:
-	$(call stream_stdout, 4gpuintel)>4gpuintel_$(GPU_TYPE)_intel.results
-
-8gpuintel_$(GPU_TYPE)_intel.results:
-	$(call stream_stdout, 8gpuintel)>8gpuintel_$(GPU_TYPE)_intel.results
-
-16gpuintel_$(GPU_TYPE)_intel.results:
-	$(call stream_stdout, 16gpuintel)>16gpuintel_$(GPU_TYPE)_intel.results
-
-32gpuintel_$(GPU_TYPE)_intel.results:
-	$(call stream_stdout, 32gpuintel)>32gpuintel_$(GPU_TYPE)_intel.results
-
-
 
 1gpuopen_$(GPU_TYPE)_open.results:
 	$(call stream_stdout, 1gpuopen)>1gpuopen_$(GPU_TYPE)_open.results
