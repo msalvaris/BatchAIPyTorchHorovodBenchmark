@@ -20,7 +20,7 @@ define execute_mpi
  			   -map-by slot -x NCCL_DEBUG=INFO \
  			   -x LD_LIBRARY_PATH -x PATH \
  			    -mca pml ob1 -mca btl ^openib \
- 			   python /benchmarks/python_synthetic_benchmark.py --model $(model) --batch_size 64"
+ 			   python /benchmarks/pytorch_synthetic_benchmark.py --model $(model) --batch_size 64"
 endef
 
 
