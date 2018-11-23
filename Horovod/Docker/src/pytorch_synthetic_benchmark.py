@@ -13,8 +13,6 @@ import numpy as np
 # Benchmark settings
 parser = argparse.ArgumentParser(description='PyTorch Synthetic Benchmark',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--fp16-allreduce', action='store_true', default=False,
-                    help='use fp16 compression during allreduce')
 
 parser.add_argument('--model', type=str, default='resnet50',
                     help='model to benchmark')
@@ -51,13 +49,10 @@ if args.cuda:
 
 optimizer = optim.SGD(model.parameters(), lr=0.01)
 
-# Horovod: (optional) compression algorithm.
-compression = hvd.Compression.fp16 if args.fp16_allreduce else hvd.Compression.none
 
 # Horovod: wrap optimizer with DistributedOptimizer.
 optimizer = hvd.DistributedOptimizer(optimizer,
-                                     named_parameters=model.named_parameters(),
-                                     compression=compression)
+                                     named_parameters=model.named_parameters())
 
 # Horovod: broadcast parameters & optimizer state.
 hvd.broadcast_parameters(model.state_dict(), root_rank=0)
