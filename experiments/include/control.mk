@@ -247,7 +247,7 @@ clean-results:
 	rm results.json
 	rm *.results
 
-make plot: results.json
+plot: results.json
 	python ../../produce_plot.py
 
 .PHONY: help build push

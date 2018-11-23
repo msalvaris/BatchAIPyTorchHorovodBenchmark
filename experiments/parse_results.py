@@ -19,7 +19,7 @@ def extract_images_per_second(data):
         if "Total img/sec" in line_string:
             return float(line_string.split(":")[-1].split("+-")[0].strip())
 
-    return list(filter(None, map(_extract, data)))
+    return list(filter(None, map(_extract, data)))[0]
 
 
 def extract_batch_size(data):
