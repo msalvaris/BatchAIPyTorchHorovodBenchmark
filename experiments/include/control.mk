@@ -22,7 +22,7 @@ export PROJECT_HELP_MSG
 
 
 define generate_job_openmpi
- python ../../generate_job_spec.py masalvar/horovod-batchai-pytorch-bench:0.13.2 openmpi \
+ python ../../generate_job_spec.py masalvar/horovod-batchai-pytorch-bench:0.15.1 openmpi \
  	--filename job.json \
  	--node_count $(1) \
  	--model $(2) \
@@ -31,7 +31,7 @@ endef
 
 
 define generate_job_local
- python ../../generate_job_spec.py masalvar/horovod-batchai-pytorch-bench:0.13.2 local \
+ python ../../generate_job_spec.py masalvar/horovod-batchai-pytorch-bench:0.15.1 local \
  	--filename job.json \
  	--node_count 1 \
  	--model $(1) \
