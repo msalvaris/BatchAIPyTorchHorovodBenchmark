@@ -10,5 +10,5 @@ FILE_SHARE_NAME:=batch2${ID}share
 NUM_NODES:=8
 JOB_NAME:=pytorch_benchmark
 SELECTED_SUBSCRIPTION:="Boston Team Danielle"
-WORKSPACE:=workspace
+WORKSPACE:=workspace_0_15_1
 PROCESSES_PER_NODE:=4
