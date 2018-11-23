@@ -17,7 +17,7 @@ def extract_gpu_type(file):
 def extract_images_per_second(data):
     def _extract(line_string):
         if "Total img/sec" in line_string:
-            return float(line_string.split(":").split("+-")[0].strip())
+            return float(line_string.split(":")[-1].split("+-")[0].strip())
 
     return list(filter(None, map(_extract, data)))
 
