@@ -22,7 +22,7 @@ export PROJECT_HELP_MSG
 
 
 define generate_job_openmpi
- python ../generate_job_spec.py masalvar/horovod-batchai-pytorch-bench:0.13.2 openmpi \
+ python ../../generate_job_spec.py masalvar/horovod-batchai-pytorch-bench:0.13.2 openmpi \
  	--filename job.json \
  	--node_count $(1) \
  	--model $(2) \
@@ -31,7 +31,7 @@ endef
 
 
 define generate_job_local
- python ../generate_job_spec.py masalvar/horovod-batchai-pytorch-bench:0.13.2 local \
+ python ../../generate_job_spec.py masalvar/horovod-batchai-pytorch-bench:0.13.2 local \
  	--filename job.json \
  	--node_count 1 \
  	--model $(1) \
@@ -212,7 +212,7 @@ gather-results:results.json
 #1gpulocal_$(GPU_TYPE)_local.results \
 results.json: 1gpuopen_$(GPU_TYPE)_open.results 2gpuopen_$(GPU_TYPE)_open.results 3gpuopen_$(GPU_TYPE)_open.results 4gpuopen_$(GPU_TYPE)_open.results 8gpuopen_$(GPU_TYPE)_open.results \
 16gpuopen_$(GPU_TYPE)_open.results 32gpuopen_$(GPU_TYPE)_open.results
-	python ../parse_results.py
+	python ../../parse_results.py
 
 
 1gpulocal_$(GPU_TYPE)_local.results:
@@ -244,6 +244,6 @@ clean-results:
 	rm *.results
 
 make plot: results.json
-	python ../produce_plot.py
+	python ../../produce_plot.py
 
 .PHONY: help build push
