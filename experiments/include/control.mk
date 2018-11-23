@@ -150,6 +150,10 @@ setup: select-subscription create-resource-group create-workspace create-storage
 	@echo "Cluster created"
 
 
+submit-2:
+		$(call generate_job_openmpi, 2, $(MODEL), 4)
+		$(call submit_job, test)
+	
 ###### Submit Jobs ######
 
 submit-jobs:
