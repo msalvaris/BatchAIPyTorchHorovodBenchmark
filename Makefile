@@ -8,7 +8,7 @@ endef
 export PROJECT_HELP_MSG
 PWD:=$(shell pwd)
 
-image_name:=masalvar/batchai-tf-benchmark-control
+image_name:=masalvar/batchai-pytorch-benchmark-control
 
 help:
 	echo "$$PROJECT_HELP_MSG" | less
