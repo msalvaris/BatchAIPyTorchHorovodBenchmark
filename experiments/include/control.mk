@@ -207,13 +207,15 @@ clean-jobs:
 
 ###### Gather Results ######
 
-gather-results:results.json
+gather-results: results.json
 	@echo "All results gathered"
 	
 
 #1gpulocal_$(GPU_TYPE)_local.results \
-results.json: 1gpuopen_$(GPU_TYPE)_open.results 2gpuopen_$(GPU_TYPE)_open.results 3gpuopen_$(GPU_TYPE)_open.results 4gpuopen_$(GPU_TYPE)_open.results 8gpuopen_$(GPU_TYPE)_open.results \
-16gpuopen_$(GPU_TYPE)_open.results 32gpuopen_$(GPU_TYPE)_open.results
+
+
+results.json: 1gpuopen_$(GPU_TYPE)_open.results 2gpuopen_$(GPU_TYPE)_open.results 3gpuopen_$(GPU_TYPE)_open.results \
+4gpuopen_$(GPU_TYPE)_open.results 8gpuopen_$(GPU_TYPE)_open.results 16gpuopen_$(GPU_TYPE)_open.results 32gpuopen_$(GPU_TYPE)_open.results
 	python ../../parse_results.py
 
 
