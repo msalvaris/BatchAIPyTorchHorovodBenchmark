@@ -25,9 +25,9 @@ def to_columnsource_and_factors(df):
     factors = list(res_dict.keys())
     counts = list(res_dict.values())
     MPI = results['MPI'].tolist()
-    factors.insert(0, ('1', 'Single GPU'))
-    counts.insert(0, df[df['MPI'] == 'local']['Images/Second'].iloc[0])
-    MPI.insert(0, 'Single GPU')
+    # factors.insert(0, ('1', 'Single GPU'))
+    # counts.insert(0, df[df['MPI'] == 'local']['Images/Second'].iloc[0])
+    # MPI.insert(0, 'Single GPU')
     source = ColumnDataSource(data=dict(x=factors, counts=counts, MPI=MPI))
     return source, factors
 
