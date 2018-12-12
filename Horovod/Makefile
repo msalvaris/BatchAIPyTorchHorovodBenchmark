@@ -10,7 +10,7 @@ export PROJECT_HELP_MSG
 
 numproc:=2 # Number of precesses/GPUs
 name_prefix:=masalvar
-tag:=0.15.1 
+tag:=0.15.2 
 model:=resnet50
 
 define execute_mpi
